@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +8,19 @@ namespace controleContas
 {
     public class Conta
     {
-        public Conta(long numero, decimal saldoInicial, Cliente titular)
+        public Conta(long numero, decimal saldoInicial, Cliente titular, Agencia agencia)
         {
             if (titular == null)
             {
                 throw new ArgumentNullException(nameof(titular), "Deve haver um titular.");
+            }
+            if (agencia == null)
+            {
+                throw new ArgumentException(nameof(agencia), "Deve haver agência.");
+            }
+            if (numero <= 0)
+            {
+                throw new ArgumentException("É preciso informar um número de conta válido.");
             }
             if (saldoInicial < 10.0m)
             {
@@ -21,13 +29,22 @@ namespace controleContas
             Numero = numero;
             Saldo = saldoInicial;
             Titular = titular;
+            AgenciaReferente = agencia;
         }
 
-        public Conta() { }
+        public Conta() 
+        {
+            Numero = 0;
+            Saldo = 0;
+            Titular = null;
+            AgenciaReferente = null;
+        }
 
-        public long Numero { get; private set; }
-        public decimal Saldo { get; set; }
-        public Cliente? Titular { get; set; }
+        public long Numero { get; set; }
+        public decimal Saldo { get; private set; }
+        public Cliente Titular { get; private set; }
+        public Agencia AgenciaReferente { get; private set; }
+
 
         public void deposito(decimal valor)
         {
@@ -53,6 +70,7 @@ namespace controleContas
                 Console.WriteLine("O valor do saque deve ser maior do que zero");
             }
         }
+
         public void Transferencia(Conta destino, decimal valor)
         {
             if (valor > 0)
@@ -76,8 +94,5 @@ namespace controleContas
                 Console.WriteLine("O valor da transferência deve ser maior que zero.");
             }
         }
-
-
-
     }
 }
