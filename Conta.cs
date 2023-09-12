@@ -8,7 +8,7 @@ namespace controleContas
 {
     public class Conta
     {
-        public Conta(long numero, decimal saldoInicial, Cliente titular, Agencia agencia)
+        public Conta(long numero, decimal saldoInicial, Cliente titular, Agencia agencia) //Método construtor da classe Conta que recebe quatro parâmetros (numero, saldo inicial, titular e agencia)
         {
             if (titular == null)
             {
@@ -32,7 +32,7 @@ namespace controleContas
             AgenciaReferente = agencia;
         }
 
-        public Conta() 
+        public Conta() //Construtor padrão, sem parâmetros
         {
             Numero = 0;
             Saldo = 0;
@@ -46,19 +46,19 @@ namespace controleContas
         public Agencia AgenciaReferente { get; private set; }
 
 
-        public void deposito(decimal valor)
+        public void deposito(decimal valor) //Método depósito que permite adicionar um valor ao saldo da conta
         {
             if (valor > 0)
                 Saldo += valor;
         }
 
-        public void Saque(decimal valor)
+        public void Saque(decimal valor) //Método saque
         {
             if (valor > 0)
             {
                 if (Saldo - valor - 0.10m >= 0)
                 {
-                    Saldo -= (valor + 0.10m);
+                    Saldo -= (valor + 0.10m); //Realiza o saque com a taxação de R$0,10
                 }
                 else
                 {
@@ -71,15 +71,14 @@ namespace controleContas
             }
         }
 
-        public void Transferencia(Conta destino, decimal valor)
+        public void Transferencia(Conta destino, decimal valor) //Método Transferência
         {
             if (valor > 0)
             {
-                // Verifique se há saldo suficiente na conta de origem.
-                if (Saldo >= valor)
+                if (Saldo >= valor) // Verifica se há saldo suficiente na conta
                 {
-                    Saque(valor); // Realiza o saque da conta de origem.
-                    destino.deposito(valor); // Realiza o depósito na conta de destino.
+                    Saque(valor); // Realiza o saque da conta de origem
+                    destino.deposito(valor); // Realiza o depósito na conta desejada
                     Console.WriteLine($"Transferência de R${valor} realizada com sucesso.");
                     Console.WriteLine($"Saldo da conta {Numero}: R${Saldo}");
                     Console.WriteLine($"Saldo da conta {destino.Numero}: R${destino.Saldo}");
