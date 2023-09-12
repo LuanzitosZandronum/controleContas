@@ -44,12 +44,12 @@ namespace controleContas
 
 		private static bool ValidCPF(string cpf) //Método de Validação de CPF
 		{
-            string cpfNumerico = new string(cpf.Where(char.IsDigit).ToArray());
+            		string cpfNumerico = new string(cpf.Where(char.IsDigit).ToArray());
 
-            if (cpfNumerico.Length != 11) //Se o CPF não tiver 11 Dígitos, ele será recusado
-            	{
+            		if (cpfNumerico.Length != 11) //Se o CPF não tiver 11 Dígitos, ele será recusado
+            		{
 				return false;
-			}
+	   		}
 			if (cpfNumerico.Distinct().Count() == 1) //Se o CPF tiver apenas dígitos repetidos (ex: 11111111111), ele será recusado
 			{
 				return false;
